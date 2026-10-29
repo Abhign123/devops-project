@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ScrumWorkflowService"
+ targetNamespace="http://example.com/scrum"
+ xmlns="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:tns="http://example.com/scrum"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <types>
+    <xsd:schema targetNamespace="http://example.com/scrum" elementFormDefault="qualified">
+      <xsd:element name="GetTasksRequest"><xsd:complexType/></xsd:element>
+      <xsd:element name="GetTasksResponse"><xsd:complexType><xsd:sequence><xsd:element name="tasks" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element>
+      <xsd:element name="CreateTaskRequest"><xsd:complexType><xsd:sequence><xsd:element name="title" type="xsd:string"/><xsd:element name="assignee" type="xsd:string" minOccurs="0"/><xsd:element name="priority" type="xsd:string" minOccurs="0"/></xsd:sequence></xsd:complexType></xsd:element>
+      <xsd:element name="CreateTaskResponse"><xsd:complexType><xsd:sequence><xsd:element name="task" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element>
+      <xsd:element name="UpdateTaskStatusRequest"><xsd:complexType><xsd:sequence><xsd:element name="id" type="xsd:int"/><xsd:element name="status" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element>
+      <xsd:element name="UpdateTaskStatusResponse"><xsd:complexType><xsd:sequence><xsd:element name="task" type="xsd:string"/></xsd:sequence></xsd:complexType></xsd:element>
+      <xsd:element name="DeleteTaskRequest"><xsd:complexType><xsd:sequence><xsd:element name="id" type="xsd:int"/></xsd:sequence></xsd:complexType></xsd:element>
+      <xsd:element name="DeleteTaskResponse"><xsd:complexType><xsd:sequence><xsd:element name="success" type="xsd:boolean"/><xsd:element name="id" type="xsd:int"/></xsd:sequence></xsd:complexType></xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="GetTasksInput"><part name="parameters" element="tns:GetTasksRequest"/></message>
+  <message name="GetTasksOutput"><part name="parameters" element="tns:GetTasksResponse"/></message>
+  <message name="CreateTaskInput"><part name="parameters" element="tns:CreateTaskRequest"/></message>
+  <message name="CreateTaskOutput"><part name="parameters" element="tns:CreateTaskResponse"/></message>
+  <message name="UpdateTaskStatusInput"><part name="parameters" element="tns:UpdateTaskStatusRequest"/></message>
+  <message name="UpdateTaskStatusOutput"><part name="parameters" element="tns:UpdateTaskStatusResponse"/></message>
+  <message name="DeleteTaskInput"><part name="parameters" element="tns:DeleteTaskRequest"/></message>
+  <message name="DeleteTaskOutput"><part name="parameters" element="tns:DeleteTaskResponse"/></message>
+  <portType name="ScrumWorkflowPortType">
+    <operation name="GetTasks"><input message="tns:GetTasksInput"/><output message="tns:GetTasksOutput"/></operation>
+    <operation name="CreateTask"><input message="tns:CreateTaskInput"/><output message="tns:CreateTaskOutput"/></operation>
+    <operation name="UpdateTaskStatus"><input message="tns:UpdateTaskStatusInput"/><output message="tns:UpdateTaskStatusOutput"/></operation>
+    <operation name="DeleteTask"><input message="tns:DeleteTaskInput"/><output message="tns:DeleteTaskOutput"/></operation>
+  </portType>
+  <binding name="ScrumWorkflowBinding" type="tns:ScrumWorkflowPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="GetTasks"><soap:operation soapAction="GetTasks"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation>
+    <operation name="CreateTask"><soap:operation soapAction="CreateTask"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation>
+    <operation name="UpdateTaskStatus"><soap:operation soapAction="UpdateTaskStatus"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation>
+    <operation name="DeleteTask"><soap:operation soapAction="DeleteTask"/><input><soap:body use="literal"/></input><output><soap:body use="literal"/></output></operation>
+  </binding>
+  <service name="ScrumWorkflowService"><port name="ScrumWorkflowPort" binding="tns:ScrumWorkflowBinding"><soap:address location="http://localhost:3000/soap"/></port></service>
+</definitions>
